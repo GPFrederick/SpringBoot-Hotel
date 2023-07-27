@@ -1,5 +1,7 @@
 package com.frederick.hotel;
 
+import com.frederick.hotel.controller.UserController;
+import com.frederick.hotel.models.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

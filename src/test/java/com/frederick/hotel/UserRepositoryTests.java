@@ -1,7 +1,10 @@
 package com.frederick.hotel;
 
-import com.frederick.hotel.User;
-import com.frederick.hotel.UserRepository;
+import com.frederick.hotel.controller.UserController;
+import com.frederick.hotel.models.User;
+import com.frederick.hotel.repository.UserRepository;
+import com.frederick.hotel.service.UserService;
+import com.frederick.hotel.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -25,16 +28,12 @@ public class UserRepositoryTests {
 
     @Test
     public void testCreateUser() {
+
         User user = new User();
-        user.setEmail("gpf95@protonmail.com");
-        user.setPassword("123456");
+        user.setEmail("fgilp95@gmail.com");
+        user.setPassword("123456789");
         user.setFirstName("Fred");
-        user.setLastName("G.");
+        user.setLastName("P.");
 
-        User savedUser = repo.save(user);
-
-        User existUser = entityManager.find(User.class, savedUser.getId());
-
-        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }
 }

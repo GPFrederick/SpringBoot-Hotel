@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+  <title>Booking List</title>
+  <link th:href="@{/css/bookings-list.css}" rel="stylesheet"/>
+  <script th:inline="javascript">
+  </script>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+<main class="flex-shrink-0">
+  <!-- Page Content-->
+  <section layout:fragment="body" class="py-5">
+    <div class="container px-5 my-5">
+      <div th:if="${param.success}" class="alert alert-success">
+        You are registered successfully!
+      </div>
+      <div class="text-center mb-5">
+        <h1 class="fw-bolder">My Bookings</h1>
+        <p class="lead fw-normal text-muted mb-0">Enjoy</p>
+      </div>
+      <div class="row gx-5">
+        <div>
+          <form th:action="@{/bookings/search}" class="form-inline my-2 my-lg-0 mb-3">
+            <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search bookings by ID" aria-label="Search">
+          </form>
+        </div>
+        <div class="d-grid col-10 mx-auto">
+          <a th:href="@{/bookings/{userId}/new(userId=${user.id})}" class="mb-5 btn btn-primary btn-lg btn-block">Create a new booking</a>
+        </div>
+
+        <div th:if="${roleDto.name == 'ADMIN'}" class="card text-center my-3">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Booking ID</th>
+              <th scope="col">Check In</th>
+              <th scope="col">Check Out</th>
+              <th scope="col">Price</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking :${bookingDtoList}">
+              <th scope="row" th:text="${booking.id}"></th>
+              <td th:text="${booking.startTime}"></td>
+              <td th:text="${booking.endTime}"></td>
+              <td th:text="${booking.price}"></td>
+              <td>
+                <a class="btn btn-primary" th:href="@{/bookings/{bookingId}(bookingId=${booking.id})}">View</a>
+                <a class="btn btn-primary" th:href="@{/bookings/{bookingId}/edit(bookingId=${booking.id})}">Edit</a>
+              </td>
+            </tbody>
+          </table>
+        </div>
+
+        <div th:each="booking :${bookingDtoList}" th:if="${user.id == booking.user.id}" class="col-lg-6 border border-danger rounded-5">
+          <div class="card text-center my-3">
+            <div th:text="${user.firstName}" class="card-header border border-3 border-bottom-0">
+              Name
+            </div>
+            <div class="card-body border border-3 border-bottom-0 border-top-0">
+              <h6 class="fw-semibold">Check In</h6>
+              <h3 th:text="${booking.startTime}" class="card-title fw-light">Check In Date</h3>
+              <h6 class="fw-semibold">Check Out</h6>
+              <h3 th:text="${booking.endTime}" class="card-title fw-light">Check Out Date</h3>
+              <h6 class="fw-semibold">Price</h6>
+              <h3 th:text="${booking.price}" class="card-text fw-light">Price</h3>
+              <h6 class="fw-semibold">Booking ID</h6>
+              <h3 th:text="${booking.id}" class="card-text fw-light">Price</h3>
+              <a class="btn btn-primary" th:href="@{/bookings/{bookingId}(bookingId=${booking.id})}">View</a>
+              <a class="btn btn-primary" th:href="@{/bookings/{bookingId}/edit(bookingId=${booking.id})}">Edit</a>
+            </div>
+            <div class="card-footer text-body-secondary border border-3 border-top-0">
+              Created
+              <p th:text="${booking.createdOn}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- Footer-->
+</body>
+</html>

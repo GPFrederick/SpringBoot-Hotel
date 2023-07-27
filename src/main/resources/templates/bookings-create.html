@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+        lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>User Create</title>
+    <script th:inline="javascript">
+        function setPrice() {
+            const checkInDate = new Date(document.getElementById('startTime').value);
+            const checkOutDate = new Date(document.getElementById('endTime').value);
+
+            const days = getDays(checkInDate, checkOutDate);
+
+            const price = calculatePrice(days);
+
+            console.log("Number of days: " + days);
+            console.log("Price: " + price);
+
+            document.getElementById('price').value = price;
+        }
+
+        function calculatePrice(days) {
+            const pricePerDay = 34500;
+
+            return price = pricePerDay * days;
+        }
+
+        function getDays(checkInDate, checkOutDate) {
+            const timeDifference = checkInDate.getTime() - checkOutDate.getTime();
+            return numberOfDays = Math.abs(timeDifference / (1000 * 60 * 60 * 24));
+        }
+    </script>
+</head>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+    <main class="flex-shrink-0">
+        <!-- Page Content-->
+        <section layout:fragment="body" class="py-5">
+            <div class="container d-flex justify-content-center align-items-center">
+                <form role="form" method="post" th:action="@{/bookings/{userId}(userId=${userId})}" th:object="${booking}">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startTime">Checkin</label>
+                            <input
+                                    type="datetime-local"
+                                    class="form-control"
+                                    id="startTime"
+                                    name="startTime"
+                                    th:field="*{startTime}"
+                                    placeholder="Checkin">
+                            <p th:if="${#fields.hasErrors('startTime')}" class="text-danger" th:errors="*{startTime}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="endTime">Checkout</label>
+                            <input
+                                    type="datetime-local"
+                                    class="form-control"
+                                    id="endTime"
+                                    name="endTime"
+                                    th:field="*{endTime}"
+                                    placeholder="Checkout"
+                                    th:onchange="setPrice();">
+                            <p th:if="${#fields.hasErrors('endTime')}" class="text-danger" th:errors="*{endTime}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Method Of Payment</label>
+                            <select th:field="*{methodOfPayment}" class="form-select" aria-label="Default select example">
+                                <option selected th:value="${'Efectivo'}">Efectivo</option>
+                                <option th:value="${'Tarjeta de Débito'}">Tarjeta de Débito</option>
+                                <option th:value="${'Tarjeta de Crédito'}">Tarjeta de Crédito</option>
+                            </select>
+                        </div>
+                        <div class="from-group col-6">
+                            <label for="price">Price</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="price"
+                                    name="price"
+                                    th:field="*{price}">
+                            <p th:if="${#fields.hasErrors('price')}" class="text-danger" th:errors="*{price}"></p>
+                            <h1 id="SetPrice"></h1>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

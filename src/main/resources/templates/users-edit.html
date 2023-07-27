@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<title>User Edit</title>
+
+<body class="d-flex flex-column h-100" xmlns:th="http://www.w3.org/1999/xhtml">
+<main class="flex-shrink-0">
+  <!-- Page Content-->
+  <section layout:fragment="body" class="py-5">
+    <div class="container">
+      <form role="form" method="post" th:action="@{/users/{userId}/edit(userId=${user.id})}" th:object="${user}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{password}">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    th:field="*{email}"
+                    placeholder="Email">
+            <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  name="firstName"
+                  th:field="*{firstName}"
+                  placeholder="Elliot">
+          <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+        </div>
+        <div class="form-group mb-3">
+          <label for="lastName">Last Name</label>
+          <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  name="lastName"
+                  th:field="*{lastName}"
+                  placeholder="Alderson">
+          <p th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
+        </div>
+        <button type="submit" class="btn btn-primary">Edit</button>
+      </form>
+    </div>
+  </section>
+</main>
+<!-- Footer-->
+</body>
+</html>>
