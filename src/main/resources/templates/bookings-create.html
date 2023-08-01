@@ -77,6 +77,7 @@
                         <div class="from-group col-6">
                             <label for="price">Price</label>
                             <input
+                                    readonly="readonly"
                                     type="text"
                                     class="form-control"
                                     id="price"
@@ -85,8 +86,9 @@
                             <p th:if="${#fields.hasErrors('price')}" class="text-danger" th:errors="*{price}"></p>
                             <h1 id="SetPrice"></h1>
                         </div>
-                        <div class="d-grid gap-2">
+                        <div class="d-grid gap-1">
                             <button type="submit" class="btn btn-primary">Create</button>
+                            <a class="btn btn-danger" th:href="@{/bookings}">Cancel</a>
                         </div>
                     </div>
                 </form>

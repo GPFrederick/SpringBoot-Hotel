@@ -53,10 +53,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void updateBooking(BookingDto bookingDto) {
-        String username = SecurityUtil.getSessionUser();
-        User user = userRepository.findByUsername(username);
         Booking booking = mapToBooking(bookingDto);
-        booking.setUser(user);
         bookingRepository.save(booking);
     }
 

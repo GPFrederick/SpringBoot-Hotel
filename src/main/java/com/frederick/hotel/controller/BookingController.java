@@ -91,7 +91,7 @@ public class BookingController {
             return "bookings/create";
         }
         bookingService.createBooking(userId, bookingDto);
-        return "redirect:/users/" + userId;
+        return "redirect:/bookings";
     }
 
     @GetMapping("/bookings/{bookingId}/edit")
@@ -110,9 +110,10 @@ public class BookingController {
             model.addAttribute("booking", booking);
             return "bookings-edit";
         }
-        BookingDto bookingDto =bookingService.findByBookingId(bookingId);
+        BookingDto bookingDto = bookingService.findByBookingId(bookingId);
         booking.setId(bookingId);
         booking.setUser(bookingDto.getUser());
+        System.out.println("User ID: " + booking.getUser().getId());
         bookingService.updateBooking(booking);
         return "redirect:/bookings";
     }

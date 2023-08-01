@@ -1,10 +1,12 @@
 package com.frederick.hotel.controller;
 
+import com.frederick.hotel.dto.BookingDto;
 import com.frederick.hotel.dto.RoleDto;
 import com.frederick.hotel.dto.UserDto;
 import com.frederick.hotel.models.Role;
 import com.frederick.hotel.models.User;
 import com.frederick.hotel.security.SecurityUtil;
+import com.frederick.hotel.service.BookingService;
 import com.frederick.hotel.service.RoleService;
 import com.frederick.hotel.service.UserService;
 import jakarta.validation.Valid;
@@ -24,19 +26,23 @@ public class UserController {
 
     private UserService userService;
     private RoleService roleService;
+    private BookingService bookingService;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService, BookingService bookingService) {
         this.userService = userService;
         this.roleService = roleService;
+        this.bookingService = bookingService;
     }
 
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<UserDto> users = userService.findAllUsers();
         List<RoleDto> roles = roleService.findAllRoles();
+        List<BookingDto> bookings = bookingService.findAllBookings();
         model.addAttribute("users", users);
         model.addAttribute("roles", roles);
+        model.addAttribute("bookings", bookings);
         return "users-list";
     }
 
